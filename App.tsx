@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
+import Onboarding from './screens/Onboarding';
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -9,8 +10,8 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <SafeAreaView>
-      <Text>Pomo Task</Text>
+    <SafeAreaView style={{flex: 1}}>
+      <Onboarding/>
     </SafeAreaView>
   );
 }
