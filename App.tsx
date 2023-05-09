@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import Onboarding from './screens/Onboarding';
+// import Onboarding from './screens/Onboarding';
+import Welcome from './screens/Welcome';
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -11,7 +12,8 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Onboarding/>
+      {/* <Onboarding/> */}
+      <Welcome/>
     </SafeAreaView>
   );
 }

@@ -9,6 +9,12 @@ const Onboarding = () => {
   // const moveToTop = useRef(new Animated.Value(180)).current;
   // const textOpacity = useRef(new Animated.Value(1)).current;
 
+  const initialInputState = {
+    fade: new Animated.Value(0),
+  };
+
+  const displayInput = useRef(initialInputState).current;
+
   const moveToTop = useRef(greetTextAnimation).current;
 
   const animateText = () => {
@@ -27,12 +33,21 @@ const Onboarding = () => {
         useNativeDriver: true,
       }),
     ]).start();
+  };
 
+  const animateInput = () => {
+      Animated.timing(displayInput.fade, {
+        toValue: 1,
+        delay: 1500,
+        duration: 2000,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }).start();
   };
 
   useEffect(() => {
     animateText();
-
+    animateInput();
   });
 
   return (
@@ -40,16 +55,18 @@ const Onboarding = () => {
       <Animated.Text style={[styles.greetingText, {transform: [{translateY: moveToTop.translateY}], opacity: moveToTop.fade}]}>
         Hi, it’s looks like {'\n'}you are new here !
         </Animated.Text>
-        <Text style={styles.requestText}>To start the configurantion we only need your name</Text>
-        <TextInput
-        style={styles.nameInput}
-        editable
-        numberOfLines={1}
-        maxLength={15}
-        />
-        <TouchableOpacity style={styles.continueBtn}>
-          <Text >{'>'}</Text>
-        </TouchableOpacity>
+        <Animated.Text style={[styles.requestText, {opacity: displayInput.fade}]}>To start the configurantion we only need your name</Animated.Text>
+        <Animated.View style={[{opacity: displayInput.fade}]}>
+          <TextInput
+          style={styles.nameInput}
+          editable
+          numberOfLines={1}
+          maxLength={15}
+          />
+          <TouchableOpacity style={styles.continueBtn}>
+            <Text style={styles.btnText}>{'>'}</Text>
+          </TouchableOpacity>
+        </Animated.View>
     </View>
   );
 };
@@ -90,6 +107,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
+    marginTop: 50,
+  },
+  btnText: {
+    color: '#5F5FFF',
+    fontSize: 52,
+    marginBottom: 6,
+    marginLeft: 4,
   },
 });
 
