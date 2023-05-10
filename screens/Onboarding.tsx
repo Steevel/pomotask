@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {View, StyleSheet, Animated, Easing, Text, TextInput, TouchableOpacity} from 'react-native';
 
-const Onboarding = () => {
+const Onboarding = ({ navigation}) => {
   const [greetTextAnimation] = useState({
     translateY: new Animated.Value(180),
     fade: new Animated.Value(1),
@@ -14,7 +14,6 @@ const Onboarding = () => {
   };
 
   const displayInput = useRef(initialInputState).current;
-
   const moveToTop = useRef(greetTextAnimation).current;
 
   const animateText = () => {
@@ -63,7 +62,7 @@ const Onboarding = () => {
           numberOfLines={1}
           maxLength={15}
           />
-          <TouchableOpacity style={styles.continueBtn}>
+          <TouchableOpacity style={styles.continueBtn} onPress={() => navigation.navigate('Welcome')}>
             <Text style={styles.btnText}>{'>'}</Text>
           </TouchableOpacity>
         </Animated.View>
