@@ -1,21 +1,25 @@
 import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+import FAB from '../components/FAB';
 
 const Home = () => {
-  const name = 'Steevel';
+  const name = 'Steevel Sharon Salis';
 
   return (
     <View style={styles.container}>
       <View style={styles.startContainer}>
+        <TouchableOpacity>
+          <Icon name="menu" size={24} color="#FFF" />
+        </TouchableOpacity>
         <Text style={styles.greetingText}>Welcome back, {name} !</Text>
-        {/* <View style={styles.btnContainer}> */}
         <TouchableOpacity style={styles.startTimerBtn}>
           <Text style={styles.startTimerBtnText}>Start Pomodoro</Text>
         </TouchableOpacity>
-        {/* </View> */}
       </View>
       <View style={styles.tasksContainer}>
         <Text style={styles.titleText}>To-do List</Text>
+        <FAB />
       </View>
     </View>
   );
@@ -44,20 +48,16 @@ const styles = StyleSheet.create({
   },
   greetingText: {
     color: '#FCFCFC',
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: 'bold',
     paddingBottom: 10,
+    marginTop: 20,
   },
   startContainer: {
     display: 'flex',
     alignItems: 'baseline',
     padding: 20,
   },
-  // btnContainer: {
-  //   display: 'flex',
-  //   justifyContent: 'flex-start',
-  //   alignItems: 'baseline',
-  // },
   startTimerBtn: {
     elevation: 10,
     paddingVertical: 8,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FCFCFC',
   },
   startTimerBtnText: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#5F5FFF',
     paddingBottom: 1,
   },
