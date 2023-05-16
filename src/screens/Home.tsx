@@ -3,13 +3,13 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import FAB from '../components/FAB';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const name = 'Steevel Sharon Salis';
 
   return (
     <View style={styles.container}>
       <View style={styles.startContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Icon name="menu" size={24} color="#FFF" />
         </TouchableOpacity>
         <Text style={styles.greetingText}>Welcome back, {name} !</Text>
