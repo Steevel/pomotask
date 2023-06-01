@@ -1,11 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
-import {View, StyleSheet, Animated, Easing, Text, TextInput, TouchableOpacity} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {useEffect, useRef} from 'react';
+import {
+  View,
+  StyleSheet,
+  Animated,
+  Easing,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 
-const Onboarding = ({ navigation}) => {
-  const [greetTextAnimation] = useState({
+const Onboarding = ({navigation}) => {
+  const [name, setName] = React.useState('');
+
+  async function saveName() {
+    if (name) {
+      try {
+        await AsyncStorage.setItem('@name', name);
+      } catch (e) {
+        // saving error
+      }
+      console.log('btn', name);
+      navigation.navigate('Welcome', {name: name});
+    }
+  }
+
+  // Animations
+  const greetTextAnimation = {
     translateY: new Animated.Value(180),
     fade: new Animated.Value(1),
-  });
+  };
   // const moveToTop = useRef(new Animated.Value(180)).current;
   // const textOpacity = useRef(new Animated.Value(1)).current;
 
@@ -35,13 +59,13 @@ const Onboarding = ({ navigation}) => {
   };
 
   const animateInput = () => {
-      Animated.timing(displayInput.fade, {
-        toValue: 1,
-        delay: 1500,
-        duration: 2000,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      }).start();
+    Animated.timing(displayInput.fade, {
+      toValue: 1,
+      delay: 1500,
+      duration: 2000,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
   };
 
   useEffect(() => {
@@ -51,21 +75,32 @@ const Onboarding = ({ navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Animated.Text style={[styles.greetingText, {transform: [{translateY: moveToTop.translateY}], opacity: moveToTop.fade}]}>
+      <Animated.Text
+        style={[
+          styles.greetingText,
+          {
+            transform: [{translateY: moveToTop.translateY}],
+            opacity: moveToTop.fade,
+          },
+        ]}>
         Hi, it’s looks like {'\n'}you are new here !
-        </Animated.Text>
-        <Animated.Text style={[styles.requestText, {opacity: displayInput.fade}]}>To start the configurantion we only need your name</Animated.Text>
-        <Animated.View style={[{opacity: displayInput.fade}]}>
-          <TextInput
-          style={styles.nameInput}
+      </Animated.Text>
+      <Animated.Text style={[styles.requestText, {opacity: displayInput.fade}]}>
+        To start the configurantion we only need your name
+      </Animated.Text>
+      <Animated.View style={[{opacity: displayInput.fade}]}>
+        <TextInput
           editable
+          value={name}
+          onChangeText={text => setName(text)}
+          style={styles.nameInput}
           numberOfLines={1}
           maxLength={15}
-          />
-          <TouchableOpacity style={styles.continueBtn} onPress={() => navigation.navigate('Welcome')}>
-            <Text style={styles.btnText}>{'>'}</Text>
-          </TouchableOpacity>
-        </Animated.View>
+        />
+        <TouchableOpacity style={styles.continueBtn} onPress={saveName}>
+          <Text style={styles.btnText}>{'>'}</Text>
+        </TouchableOpacity>
+      </Animated.View>
     </View>
   );
 };
@@ -92,12 +127,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     // display: 'none',
   },
-  nameInput:{
+  nameInput: {
     backgroundColor: '#fff',
     borderRadius: 10,
-
   },
-  continueBtn:{
+  continueBtn: {
     width: 80,
     height: 80,
     borderRadius: 50,

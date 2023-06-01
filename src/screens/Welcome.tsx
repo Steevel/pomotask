@@ -1,8 +1,30 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Welcome = () => {
-  const name = 'Steevel Salis';
+const Welcome = ({route, navigation}) => {
+  // const [name, setName] = useState<string | null>('');
+  const {name} = route.params;
+
+  // async function getName() {
+  //   try {
+  //     const data = await AsyncStorage.getItem('@name');
+  //     setName(data);
+  //     setTimeout(() => {
+  //       navigation.navigate('AppStack');
+  //     }, 1500);
+  //   } catch (e) {
+  //     setName('User');
+  //   }
+  // }
+
+  useEffect(() => {
+    // getName();
+    setTimeout(() => {
+      navigation.navigate('AppStack');
+    }, 1500);
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.welcomText}>Hi {name}</Text>
@@ -24,7 +46,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 36,
     fontWeight: 'bold',
-    marginBottom:10,
+    marginBottom: 10,
   },
 });
 
